@@ -9,4 +9,7 @@ import java.util.Optional;
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
 
     Optional<ProfileEntity> findByEmail(String email);
+
+    // behind the scenes JPI is going to execute this SQL Query  select * from tbl_profiles where activation_token = ?
+    Optional<ProfileEntity> findByActivationToken(String activationToken);
 }
