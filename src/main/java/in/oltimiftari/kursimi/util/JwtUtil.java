@@ -84,12 +84,12 @@ public class JwtUtil {
     }
 
     // Token Validation
-    public Boolean validateToken(String token, String username) {
-        final String extractedUsername = extractUsername(token);
-        return (extractedUsername.equals(username) && !isTokenExpired(token));
+    public Boolean validateToken(String token, org.springframework.security.core.userdetails.UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public Boolean validateRefreshToken(String token, String username) {
-        return validateToken(token, username);
+    public Boolean validateRefreshToken(String token, org.springframework.security.core.userdetails.UserDetails userDetails) {
+        return validateToken(token, userDetails);
     }
 }
