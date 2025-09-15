@@ -11,6 +11,7 @@ import in.oltimiftari.kursimi.repository.IncomeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class IncomeService {
         return  toDTO(newExpense);
     }
 
-    //Retrieves all incomes for current month/based on the startdate and end date
+    //Retrieves all incomes for current month/based on the start-date and end date
 
     public List<IncomeDTO> getCurrentMonthIncomesForCurrentUser() {
         ProfileEntity profile = profileService.getCurrentProfile();
@@ -52,6 +53,20 @@ public class IncomeService {
             throw new RuntimeException("Unauthorized to delete this income");
         }
         incomeRepository.delete(entity);
+    }
+
+    // Get latest 5 incomes for current user
+    public List<IncomeDTO> getLatest5IncomesForCurrentUser() {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<IncomeEntity> list = incomeRepository.findTop5ByProfileIdOrderByDateDesc(profile.getId());
+        return list.stream().map(this::toDTO).toList();
+    }
+
+    //Get total incomes for current user
+    public BigDecimal getTotalIncomeForCurrentUser() {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        BigDecimal total = incomeRepository.findTotalExpenseByProfileId(profile.getId());
+        return total != null ? total: BigDecimal.ZERO;
     }
 
 
