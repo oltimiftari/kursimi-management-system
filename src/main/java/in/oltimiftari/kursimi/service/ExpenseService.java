@@ -7,6 +7,9 @@ import in.oltimiftari.kursimi.entity.ProfileEntity;
 import in.oltimiftari.kursimi.repository.CategoryRepository;
 import in.oltimiftari.kursimi.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.math3.analysis.function.Exp;
+import org.springframework.cglib.core.Local;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -70,6 +73,11 @@ public class ExpenseService {
         return total != null ? total: BigDecimal.ZERO;
     }
 
+    public List<ExpenseDTO> filterExpenses(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<ExpenseEntity> list = expenseRepository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(profile.getId(), startDate, endDate, keyword, sort);
+        return list.stream().map(this::toDTO).toList();
+    }
 
     //helper methods
     private ExpenseEntity toEntity(ExpenseDTO dto, ProfileEntity profile, CategoryEntity category) {

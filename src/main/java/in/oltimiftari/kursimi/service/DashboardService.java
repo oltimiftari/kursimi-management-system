@@ -59,5 +59,14 @@ public class DashboardService {
                    }
                    return cmp;
                }).collect(Collectors.toList());
+       returnValue.put("totalBalance",
+               incomeService.getTotalIncomeForCurrentUser()
+                       .subtract(expenseService.getTotalExpenseForCurrentUser()));
+       returnValue.put("totalIncome", incomeService.getTotalIncomeForCurrentUser());
+       returnValue.put("totalExpense", expenseService.getTotalExpenseForCurrentUser());
+       returnValue.put("recent5Expenses", latestExpenses);
+       returnValue.put("recent5Incomes", latestIncomes);
+       returnValue.put("recentTransactions", recentTransactions);
+       return returnValue;
     }
 }
