@@ -1,5 +1,5 @@
 import logo from "./logo.png";
-import login_bg from "./login-bg.png";
+import login_bg from "./login_bg.png";
 
 export const assets = {
     logo,
