@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 body {
-font-family: 'Outfit', sans-serif;
-background-color: #fcfbfc;
-overflow-x: hidden;
+    font-family: 'Outfit', sans-serif;
+    background-color: #fcfbfc;
+    overflow-x: hidden;
 }

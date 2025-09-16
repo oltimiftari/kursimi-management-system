@@ -1,7 +1,7 @@
 const App = () => {
-    return (
+    return(
         <div>Kursimi</div>
-        )
-    }
+    )
+}
 
 export default App;
