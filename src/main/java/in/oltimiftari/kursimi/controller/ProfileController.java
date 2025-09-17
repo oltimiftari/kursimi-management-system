@@ -3,7 +3,6 @@ import in.oltimiftari.kursimi.dto.AuthDTO;
 import in.oltimiftari.kursimi.dto.ProfileDTO;
 import in.oltimiftari.kursimi.service.ProfileService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +47,12 @@ public class ProfileController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of( "message", e.getMessage()
             ));
         }
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileDTO> getPublicProfile() {
+        ProfileDTO profileDTO = profileService.getPublicProfile(null);
+        return ResponseEntity.ok(profileDTO);
     }
 }
 
