@@ -1,16 +1,16 @@
 import {Layers2, Pencil} from "lucide-react";
 
-const CategoryList = ({categories, onEditCategory, onDeleteCategory}) => {
+const CategoryList = ({categories, onEditCategory}) => {
     return (
         <div className="card p-4">
             <div className="flex items-center justify-between mb-4">
-                <h4 className="text-lg font-semibold">Category Sources</h4>
+                <h4 className="text-lg font-semibold">Burimet e Kategorive</h4>
             </div>
 
             {/* Category list */}
             {categories.length === 0 ? (
                 <p className="text-gray-500">
-                    No categories added yet. Add some to get started!
+                    Ende nuk ke kategori. Shto disa për të filluar!
                 </p>
             ): (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
