@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import axiosConfig from "../util/axiosConfig.jsx";
 import IncomeList from "../components/IncomeList.jsx";
 import Modal from "../components/Modal.jsx";
-import {Plus} from "lucide-react";
 import AddIncomeForm from "../components/AddIncomeForm.jsx";
 import DeleteAlert from "../components/DeleteAlert.jsx";
 import IncomeOverview from "../components/IncomeOverview.jsx";
@@ -122,6 +121,38 @@ const Income = () => {
         }
     }
 
+    const handleDownloadIncomeDetails = async() => {
+        try {
+            const response = await axiosConfig.get(API_ENDPOINTS.INCOME_EXCEL_DOWNLOAD, {responseType: "blob"});
+            let filename = "income_details.xlsx";
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", filename);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+            window.URL.revokeObjectURL(url);
+            toast.success("Detajet e të ardhurave u shkarkuan me sukses");
+        }catch(error) {
+            console.error('Error downloading income details:', error);
+            toast.error(error.response?.data?.message || "Dështoi shkarkimi i të dhënave për të ardhurat");
+        }
+    }
+
+
+    const handleEmailIncomeDetails = async () => {
+        try {
+            const response = await axiosConfig.get(API_ENDPOINTS.EMAIL_INCOME);
+            if (response.status === 200) {
+                toast.success("Detajet e të ardhurave u dërguan me sukses me email");
+            }
+        }catch(error) {
+            console.error('Error emailing income details:', error);
+            toast.error(error.response?.data?.message || "Dështoi dërgimi i detajeve të të ardhurave me email");
+        }
+    }
+
 
         useEffect(() => {
         fetchIncomeDetails();
@@ -141,6 +172,8 @@ const Income = () => {
                         <IncomeList
                             transactions={incomeData}
                             onDelete={(id) => setOpenDeleteAlert({show:true, data: id})}
+                            onDownload={handleDownloadIncomeDetails}
+                            onEmail={handleEmailIncomeDetails}
                         />
 
                     {/* Add Income Modal */}
