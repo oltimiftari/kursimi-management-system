@@ -8,6 +8,8 @@ import IncomeList from "../components/IncomeList.jsx";
 import Modal from "../components/Modal.jsx";
 import {Plus} from "lucide-react";
 import AddIncomeForm from "../components/AddIncomeForm.jsx";
+import DeleteAlert from "../components/DeleteAlert.jsx";
+import IncomeOverview from "../components/IncomeOverview.jsx";
 
 const Income = () => {
     useUser();
@@ -54,18 +56,6 @@ const Income = () => {
         }
     }
 
-    //delete income details
-    const deleteIncome = async (id) => {
-        try {
-            await axiosConfig.delete(API_ENDPOINTS.DELETE_INCOME(id));
-            setOpenDeleteAlert({show: false, data: null});
-            toast.success("E ardhura u fshi me sukses");
-            fetchIncomeDetails();
-        }catch(error) {
-            console.log('Error deleting income', error);
-            toast.error(error.response?.data?.message || "Dështoi fshirja e të ardhurës");
-        }
-    }
 
     //save the income details
     const handleAddIncome = async (income) => {
@@ -119,6 +109,19 @@ const Income = () => {
 
     }
 
+    //delete income details
+    const deleteIncome = async (id) => {
+        try {
+            await axiosConfig.delete(API_ENDPOINTS.DELETE_INCOME(id));
+            setOpenDeleteAlert({show: false, data: null});
+            toast.success("E ardhura u fshi me sukses");
+            fetchIncomeDetails();
+        }catch(error) {
+            console.log('Error deleting income', error);
+            toast.error(error.response?.data?.message || "Dështoi fshirja e të ardhurës");
+        }
+    }
+
 
         useEffect(() => {
         fetchIncomeDetails();
@@ -132,14 +135,12 @@ const Income = () => {
                 <div className="grid grid-cols-1 gap-6">
                     <div>
                         {/* overview for income with line char */}
-                        <button className="add-btn" onClick={() => setOpenAddIncomeModal(true)}>
-                            <Plus size={15} className="text-lg" /> Shto të ardhura
-                        </button>
+                        <IncomeOverview transactions={incomeData} onAddIncome={() => setOpenAddIncomeModal(true)} />
                     </div>
 
                         <IncomeList
                             transactions={incomeData}
-                            onDelete={(id) => console.log('deleting the income', id)}
+                            onDelete={(id) => setOpenDeleteAlert({show:true, data: id})}
                         />
 
                     {/* Add Income Modal */}
@@ -151,6 +152,18 @@ const Income = () => {
                         <AddIncomeForm
                             onAddIncome={(income) => handleAddIncome(income)}
                             categories={categories}
+                        />
+                    </Modal>
+
+                    {/* Delete Income Modal */}
+                    <Modal
+                        isOpen={openDeleteAlert.show}
+                        onClose={() => setOpenDeleteAlert({show: false, data: null})}
+                        title="Fshi të ardhurat"
+                    >
+                        <DeleteAlert
+                            content="A jeni i sigurt që doni të fshini këto të dhëna për të ardhurat?"
+                            onDelete={() => deleteIncome(openDeleteAlert.data)}
                         />
                     </Modal>
                 </div>

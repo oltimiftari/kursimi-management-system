@@ -18,7 +18,8 @@ const Category = () => {
     const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
 
-    const fetchCategoryDetails = async () => {
+
+        const fetchCategoryDetails = async () => {
         if(loading) return;
 
         setLoading(true);
@@ -154,8 +155,6 @@ const Category = () => {
                         onAddCategory={handleUpdateCategory}
                         isEditing={true}
                     />
-
-
                 </Modal>
             </div>
         </Dashboard>

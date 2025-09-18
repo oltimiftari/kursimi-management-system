@@ -56,7 +56,7 @@ const AddIncomeForm = ({onAddIncome, categories}) => {
             />
 
             <Input
-                label="Category"
+                label="Kategoria"
                 value={income.categoryId}
                 onChange={({target}) => handleChange('categoryId', target.value)}
                 isSelect={true}
@@ -66,7 +66,7 @@ const AddIncomeForm = ({onAddIncome, categories}) => {
             <Input
                 value={income.amount}
                 onChange={({target}) => handleChange('amount', target.value)}
-                label="Amount"
+                label="Shuma"
                 placeholder="p.sh., 500.00"
                 type="number"
             />
@@ -74,7 +74,7 @@ const AddIncomeForm = ({onAddIncome, categories}) => {
             <Input
                 value={income.date}
                 onChange={({target}) => handleChange('date', target.value)}
-                label="Date"
+                label="Data"
                 placeholder=""
                 type="date"
             />
@@ -87,11 +87,11 @@ const AddIncomeForm = ({onAddIncome, categories}) => {
                     {loading ? (
                         <>
                             <LoaderCircle className="w-4 h-4 animate-spin"/>
-                            Adding...
+                            Duke shtuar…
                         </>
                     ): (
                         <>
-                            Add Income
+                            Shto të ardhura
                         </>
                     )}
                 </button>
