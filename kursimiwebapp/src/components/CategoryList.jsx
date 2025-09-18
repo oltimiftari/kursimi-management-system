@@ -1,6 +1,6 @@
-import {Layers2, Pencil} from "lucide-react";
+import {Layers2, Pencil, Trash2} from "lucide-react";
 
-const CategoryList = ({categories, onEditCategory}) => {
+const CategoryList = ({categories, onEditCategory, onDeleteCategory}) => {
     return (
         <div className="card p-4">
             <div className="flex items-center justify-between mb-4">
@@ -46,6 +46,12 @@ const CategoryList = ({categories, onEditCategory}) => {
                                         onClick={() => onEditCategory(category)}
                                         className="text-gray-400 hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                         <Pencil size={18} />
+                                    </button>
+
+                                    <button
+                                        onClick={() => onDeleteCategory(category.id)}
+                                        className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                        <Trash2 size={18} />
                                     </button>
                                 </div>
                             </div>

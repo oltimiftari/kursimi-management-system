@@ -100,6 +100,19 @@ const Category = () => {
         }
     }
 
+    const handleDeleteCategory = async (categoryId) => {
+        try {
+            await axiosConfig.delete(API_ENDPOINTS.DELETE_CATEGORY(categoryId));
+            toast.success("Kategoria u fshi me sukses");
+            fetchCategoryDetails(); // rifreskon listën
+        } catch (error) {
+            console.error("Error deleting category:", error.response?.data || error.message);
+            toast.error(error.response?.data?.message || "Fshirja e kategorisë dështoi");
+        }
+    };
+
+
+
     return (
         <Dashboard activeMenu="Category">
             <div className="my-5 mx-auto">
@@ -115,7 +128,7 @@ const Category = () => {
                 </div>
 
                 {/* Category list */}
-                <CategoryList categories={categoryData} onEditCategory={handleEditCategory} />
+                <CategoryList categories={categoryData} onEditCategory={handleEditCategory} onDeleteCategory={handleDeleteCategory}/>
 
                 {/* Adding category modal*/}
                 <Modal
@@ -141,6 +154,8 @@ const Category = () => {
                         onAddCategory={handleUpdateCategory}
                         isEditing={true}
                     />
+
+
                 </Modal>
             </div>
         </Dashboard>

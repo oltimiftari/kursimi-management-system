@@ -51,7 +51,7 @@ const AddCategoryForm = ({onAddCategory,initialCategoryData, isEditing}) => {
                 value={category.name}
                 onChange={({target}) => handleChange("name", target.value)}
                 label="Kategoria"
-                placeholder="p.sh., Punë e Lirë,Rroga,Shpenzime Ushqimore"
+                placeholder="p.sh., Punë e pavarur,Rroga,Shpenzime Ushqimore"
                 type="text"
             />
 
