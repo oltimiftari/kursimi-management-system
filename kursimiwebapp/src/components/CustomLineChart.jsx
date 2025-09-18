@@ -37,7 +37,7 @@ const CustomLineChart = ({ data }) => {
                     <hr className="my-1 border-gray-200" />
                     {/* Display the total amount for the date */}
                     <p className="text-sm text-gray-700 font-bold mb-2">
-                        Total: <span className="text-purple-800">&#8377;{addThousandsSeparator(dataPoint.totalAmount)}</span>
+                        Total: <span className="text-yellow-600">{addThousandsSeparator(dataPoint.totalAmount)}</span>
                     </p>
 
                     {/* Iterate over the newly grouped categories for a consolidated view */}
@@ -47,7 +47,7 @@ const CustomLineChart = ({ data }) => {
                             {categoriesInTooltip.map((groupedItem, index) => (
                                 <div key={index} className="flex justify-between text-xs text-gray-700">
                                     <span>{groupedItem.categoryName}:</span>
-                                    <span>&#8377;{addThousandsSeparator(groupedItem.totalAmount)}</span>
+                                    <span>{addThousandsSeparator(groupedItem.totalAmount)}</span>
                                 </div>
                             ))}
                         </div>
@@ -64,8 +64,8 @@ const CustomLineChart = ({ data }) => {
                 <AreaChart data={data}>
                     <defs>
                         <linearGradient id="expenseGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#875cf5" stopOpacity={0.4} />
-                            <stop offset="95%" stopColor="#875cf5" stopOpacity={0} />
+                            <stop offset="5%" stopColor="#7ACC06" stopOpacity={0.4} />
+                            <stop offset="95%" stopColor="#7ACC06" stopOpacity={0} />
                         </linearGradient>
                     </defs>
 
@@ -77,10 +77,10 @@ const CustomLineChart = ({ data }) => {
                     <Area
                         type="monotone"
                         dataKey="totalAmount"
-                        stroke="#875cf5"
+                        stroke="#7ACC06"
                         fill="url(#expenseGradient)"
                         strokeWidth={3}
-                        dot={{ r: 3, fill: "#ab8df8" }}
+                        dot={{ r: 3, fill: "#7ACC06" }}
                     />
                 </AreaChart>
             </ResponsiveContainer>

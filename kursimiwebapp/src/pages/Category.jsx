@@ -147,7 +147,7 @@ const Category = () => {
                         setSelectedCategory(null);
                     }}
                     isOpen={openEditCategoryModal}
-                    title="Update Category"
+                    title="Përditëso kategorinë"
                 >
 
                     <AddCategoryForm

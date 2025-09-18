@@ -17,14 +17,14 @@ const IncomeOverview = ({transactions, onAddIncome}) => {
             <div className="flex items-center justify-between">
                 <div>
                     <h5 className="text-lg">
-                        Income Overview
+                        Përmbledhje e të ardhurave
                     </h5>
                     <p className="text-xs text-gray-400 mt-0 5">
-                        Track your earnings over time and analyze your income trends.
+                        Ndjek të ardhurat tuaja me kalimin e kohës dhe analizoni trendet e të ardhurave.
                     </p>
                 </div>
                 <button className="add-btn" onClick={onAddIncome}>
-                    <Plus size={15} className="text-lg" /> Add Income
+                    <Plus size={15} className="text-lg" /> Shto të ardhura
                 </button>
             </div>
             <div className="mt-10">

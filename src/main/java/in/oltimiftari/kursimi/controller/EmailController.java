@@ -29,8 +29,8 @@ public class EmailController {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         excelService.writeIncomesToExcel(baos, incomeService.getCurrentMonthIncomesForCurrentUser());
         emailService.sendEmailWithAttachment(profile.getEmail(),
-                "Your Income Excel Report",
-                "Please find attached your income report",
+                "Raporti juaj i të ardhurave në Excel",
+                "Raporti juaj i të ardhurave është i bashkëngjitur në attach",
                 baos.toByteArray(),
                 "income.xlsx");
         return ResponseEntity.ok(null);
@@ -43,8 +43,8 @@ public class EmailController {
         excelService.writeExpensesToExcel(baos, expenseService.getCurrentMonthExpensesForCurrentUser());
         emailService.sendEmailWithAttachment(
                 profile.getEmail(),
-                "Your Expense Excel Report",
-                "Please find attached your expense report.",
+                "Raporti juaj i shpenzimeve në Excel",
+                "Raporti juaj i shpenzimeve është i bashkëngjitur në attach",
                 baos.toByteArray(),
                 "expenses.xlsx");
         return ResponseEntity.ok(null);

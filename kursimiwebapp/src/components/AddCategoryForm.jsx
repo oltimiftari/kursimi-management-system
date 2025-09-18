@@ -72,11 +72,11 @@ const AddCategoryForm = ({onAddCategory,initialCategoryData, isEditing}) => {
                     {loading ? (
                         <>
                             <LoaderCircle className="w-4 h-4 animate-spin"/>
-                            {isEditing ? "Updating..." : "Adding..."}
+                            {isEditing ? "Duke përditësuar..." : "Duke shtuar..."}
                         </>
                     ): (
                         <>
-                            {isEditing ? "Update Category" : "Shto Kategori"}
+                            {isEditing ? "Përditëso kategorinë" : "Shto Kategori"}
                         </>
                     )}
                 </button>
