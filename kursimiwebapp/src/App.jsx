@@ -7,6 +7,7 @@ import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import {Toaster} from "react-hot-toast";
 import Home from "./pages/Home.jsx";
+import Goal from "./pages/Goal.jsx";
 
 const App = () => {
     return(
@@ -20,6 +21,7 @@ const App = () => {
                     <Route path="/expense" element={<Expense />} />
                     <Route path="/category" element={<Category />} />
                     <Route path="/filter" element={<Filter />} />
+                    <Route path="/goals" element={<Goal />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                 </Routes>
