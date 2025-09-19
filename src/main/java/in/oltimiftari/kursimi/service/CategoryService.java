@@ -59,20 +59,16 @@ public class CategoryService {
 
     }
 
-    // Fshin një kategori për user-in aktual
-    public void deleteCategory(Long categoryId) {
-        // Merr profile-in aktual
+
+    public  void deleteCategory(Long categoryId) {
         ProfileEntity profile = profileService.getCurrentProfile();
-
-        // Kontrollo nëse ekziston kategoria për këtë profile
-        CategoryEntity category = categoryRepository.findByIdAndProfileId(categoryId, profile.getId())
-                .orElseThrow(() -> new RuntimeException("Kategoria nuk u gjet ose nuk është e aksesueshme"));
-
-        // Fshi kategorinë
-        categoryRepository.delete(category);
+        CategoryEntity entity = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        if(!entity.getProfile().getId().equals(profile.getId())){
+            throw new RuntimeException("Unauthorized to delete this category");
+        }
+        categoryRepository.delete(entity);
     }
-
-
 
 
         //helper methods

@@ -8,6 +8,7 @@ import axiosConfig from "../util/axiosConfig.jsx";
 import Modal from "../components/Modal.jsx";
 import AddCategoryForm from "../components/AddCategoryForm.jsx";
 import toast from "react-hot-toast";
+import DeleteAlert from "../components/DeleteAlert.jsx";
 
 const Category = () => {
 
@@ -17,11 +18,14 @@ const Category = () => {
     const [openAddCategoryModal, setOpenAddCategoryModal] = useState(false);
     const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [openDeleteAlert, setOpenDeleteAlert] = useState({
+        show: false,
+        data: null,
+    });
 
 
-        const fetchCategoryDetails = async () => {
+    const fetchCategoryDetails = async () => {
         if(loading) return;
-
         setLoading(true);
 
         try {
@@ -101,16 +105,18 @@ const Category = () => {
         }
     }
 
-    const handleDeleteCategory = async (categoryId) => {
+    //delete category
+    const deleteCategory = async (categoryId) => {
         try {
             await axiosConfig.delete(API_ENDPOINTS.DELETE_CATEGORY(categoryId));
+            setOpenDeleteAlert({show: false, data: null});
             toast.success("Kategoria u fshi me sukses");
-            fetchCategoryDetails(); // rifreskon listën
-        } catch (error) {
-            console.error("Error deleting category:", error.response?.data || error.message);
-            toast.error(error.response?.data?.message || "Fshirja e kategorisë dështoi");
+            fetchCategoryDetails();
+        }catch(error) {
+            console.log('Error deleting income', error);
+            toast.error(error.response?.data?.message || "Dështoi fshirja e të ardhurës");
         }
-    };
+    }
 
 
 
@@ -129,7 +135,7 @@ const Category = () => {
                 </div>
 
                 {/* Category list */}
-                <CategoryList categories={categoryData} onEditCategory={handleEditCategory} onDeleteCategory={handleDeleteCategory}/>
+                <CategoryList categories={categoryData} onEditCategory={handleEditCategory} onDeleteCategory={(id) => setOpenDeleteAlert({ show: true, data: id })} />
 
                 {/* Adding category modal*/}
                 <Modal
@@ -154,6 +160,18 @@ const Category = () => {
                         initialCategoryData={selectedCategory}
                         onAddCategory={handleUpdateCategory}
                         isEditing={true}
+                    />
+                </Modal>
+
+                {/* Delete Category Modal */}
+                <Modal
+                    isOpen={openDeleteAlert.show}
+                    onClose={() => setOpenDeleteAlert({show: false, data: null})}
+                    title="Fshi kategorinë"
+                >
+                    <DeleteAlert
+                        content="A jeni i sigurt që doni të fshini këtë kategori?"
+                        onDelete={() => deleteCategory(openDeleteAlert.data)}
                     />
                 </Modal>
             </div>

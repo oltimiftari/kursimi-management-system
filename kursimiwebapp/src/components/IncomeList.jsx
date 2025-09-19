@@ -34,14 +34,15 @@ const IncomeList = ({transactions, onDelete, onDownload, onEmail}) => {
                         {loading ? (
                             <>
                                 <LoaderCircle className="w-4 h-4 animate-spin"/>
-                                Duke dërguar email...
+                                Duke dërguar në email...
                             </>
                         ): (
                             <>
                                 <Mail size={15} className="text-base" />
-                                Email
+                                Dërgo në email
                             </>
-                        )}                    </button>
+                        )}
+                    </button>
                     <button disabled={loading} className="card-btn" onClick={handleDownload}>
                         {loading ? (
                             <>
