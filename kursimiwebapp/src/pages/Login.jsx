@@ -70,7 +70,7 @@ const Login = () => {
 
                 <div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-8 max-h-[90vh] overflow-y-auto">
                     <h3 className="text-2xl font-semibold text-black text-center mb-2">
-                        Përshëndetje përsëri
+                        Përshëndetje
                     </h3>
                     <p className="text-sm text-slate-700 text-center mb-8">
                         Ju lutem, jepni të dhënat tuaja për t'u identifikuar
