@@ -46,7 +46,7 @@ const Filter = () => {
     }
 
     return(
-        <Dashboard activeMenu="Filters">
+        <Dashboard activeMenu="Zgjedh Filtërat">
             <div className="my-5 mx-auto">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-semibold">Filtro transaksionet</h2>

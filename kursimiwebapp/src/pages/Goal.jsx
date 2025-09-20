@@ -105,7 +105,7 @@ const Goal = () => {
     }, []);
 
     return(
-        <Dashboard activeMenu="Goals">
+        <Dashboard activeMenu="Qëllimet">
             <div className="my-5 mx-auto">
                 <div className="grid grid-cols-1 gap-6">
                     <div>

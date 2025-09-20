@@ -121,7 +121,7 @@ const Category = () => {
 
 
     return (
-        <Dashboard activeMenu="Category">
+        <Dashboard activeMenu="Kategoritë">
             <div className="my-5 mx-auto">
                 {/* Add button to add category*/}
                 <div className="flex justify-between items-center mb-5">

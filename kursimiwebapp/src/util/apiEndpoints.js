@@ -25,6 +25,8 @@ export const API_ENDPOINTS = {
     EMAIL_EXPENSE: "/email/expense-excel",
     GOALS: "/goals",
     DELETE_GOAL: (goalId) => `/goals/${goalId}`,
+    DEBTS: '/api/debts',
+    DEBT_BY_ID: (id) => `/api/debts/${id}`,
     APPLY_FILTERS: "/filter",
     DASHBOARD_DATA: "/dashboard",
     UPLOAD_IMAGE: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`

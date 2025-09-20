@@ -38,8 +38,8 @@ const Expense = () => {
                 setExpenseData(response.data);
             }
         } catch (error) {
-            console.error("Failed to fetch expense details:", error);
-            toast.error("Failed to fetch expense details.");
+            console.error("Nuk u morën detajet e shpenzimeve:", error);
+            toast.error("Nuk u morën detajet e shpenzimeve.");
         } finally {
             setLoading(false);
         }
@@ -55,8 +55,8 @@ const Expense = () => {
                 setCategories(response.data);
             }
         } catch (error) {
-            console.error("Failed to fetch expense categories:", error);
-            toast.error("Failed to fetch expense categories.");
+            console.error("Nuk u morën kategoritë e shpenzimeve:", error);
+            toast.error("Nuk u morën kategoritë e shpenzimeve.");
         }
     };
 
@@ -66,29 +66,29 @@ const Expense = () => {
         const { name, categoryId, amount, date, icon } = expense; // Changed 'category' to 'categoryId'
 
         if (!name.trim()) {
-            toast.error("Name is required.");
+            toast.error("Vendosni një emër për të vazhduar.");
             return;
         }
 
         // Validation Checks
         if (!categoryId) { // Validate categoryId now
-            toast.error("Category is required.");
+            toast.error("Zgjidhni një kategori për të vazhduar");
             return;
         }
 
         if (!amount || isNaN(amount) || Number(amount) <= 0) {
-            toast.error("Amount should be a valid number greater than 0.");
+            toast.error("Shuma duhet të jetë një numër i vlefshëm më i madh se 0.");
             return;
         }
 
         if (!date) {
-            toast.error("Date is required.");
+            toast.error("Fusha e datës nuk mund të jetë bosh.");
             return;
         }
 
         const today = new Date().toISOString().split('T')[0];
         if (date > today) {
-            toast.error('Date cannot be in the future');
+            toast.error('Data nuk mund të jetë në të ardhmen');
             return;
         }
 
@@ -102,15 +102,15 @@ const Expense = () => {
             });
 
             setOpenAddExpenseModal(false);
-            toast.success("Expense added successfully");
+            toast.success("Shpenzimi u shtua me sukses");
             fetchExpenseDetails(); // Refresh expense list
             fetchExpenseCategories();
         } catch (error) {
             console.error(
-                "Error adding expense:",
+                "Gabim gjatë shtimit të shpenzimit:",
                 error.response?.data?.message || error.message
             );
-            toast.error(error.response?.data?.message || "Failed to add expense.");
+            toast.error(error.response?.data?.message || "Shtimi i shpenzimit dështoi.");
         }
     };
 
@@ -120,14 +120,14 @@ const Expense = () => {
             await axiosConfig.delete(API_ENDPOINTS.DELETE_EXPENSE(id));
 
             setOpenDeleteAlert({ show: false, data: null });
-            toast.success("Expense details deleted successfully");
+            toast.success("Detajet e shpenzimit u fshinë me sukses.");
             fetchExpenseDetails();
         } catch (error) {
             console.error(
-                "Error deleting expense:",
+                "Gabim gjatë fshirjes së shpenzimit:",
                 error.response?.data?.message || error.message
             );
-            toast.error(error.response?.data?.message || "Failed to delete expense.");
+            toast.error(error.response?.data?.message || "Fshirja e shpenzimit dështoi.");
         }
     };
 
@@ -153,10 +153,10 @@ const Expense = () => {
             link.parentNode.removeChild(link); // Clean up the link element
             window.URL.revokeObjectURL(url); // Release the object URL
 
-            toast.success("Expense details downloaded successfully!");
+            toast.success("Detajet e shpenzimeve u shkarkuan me sukses!");
         } catch (error) {
-            console.error("Error downloading expense details:", error);
-            toast.error("Failed to download expense details. Please try again.");
+            console.error("Gabim gjatë shkarkimit të detajeve të shpenzimeve:", error);
+            toast.error("Dështoi shkarkimi i detajeve të shpenzimeve. Ju lutemi, provoni përsëri.");
         }
     };
 
@@ -164,11 +164,11 @@ const Expense = () => {
         try {
             const response = await axiosConfig.get(API_ENDPOINTS.EMAIL_EXPENSE);
             if(response.status === 200) {
-                toast.success("Email sent");
+                toast.success("Emaili u dërgua me sukses");
             }
         }catch (e) {
-            console.error("Error emailing expense details:", e);
-            toast.error("Failed to email expense details. Please try again.");
+            console.error("Gabim gjatë dërgimit të emailit me detajet e shpenzimit:", e);
+            toast.error("Emaili me detajet e shpenzimit nuk u dërgua. Ju lutemi provoni përsëri.");
         }
     }
 
@@ -178,7 +178,7 @@ const Expense = () => {
     }, []);
 
     return (
-        <Dashboard activeMenu="Expense">
+        <Dashboard activeMenu="Shpenzimet">
             <div className="my-5 mx-auto">
                 <div className="grid grid-cols-1 gap-6">
                     <div className="">
