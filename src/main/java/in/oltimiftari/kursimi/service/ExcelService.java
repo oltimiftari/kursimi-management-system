@@ -7,6 +7,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import in.oltimiftari.kursimi.dto.DebtDto; // SHTO KËTË IMPORT
+
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -63,4 +65,35 @@ public class ExcelService {
             workbook.write(os);
         }
     }
+
+    // METODA E RE PËR BORXHET
+    public void writeDebtsToExcel(OutputStream os, List<DebtDto> debts) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Debts");
+            Row header = sheet.createRow(0);
+            header.createCell(0).setCellValue("S.No");
+            header.createCell(1).setCellValue("Emri");
+            header.createCell(2).setCellValue("Shuma Origjinale");
+            header.createCell(3).setCellValue("Shuma e Mbetur");
+            header.createCell(4).setCellValue("Norma e Interesit");
+            header.createCell(5).setCellValue("Tipi");
+            header.createCell(6).setCellValue("Data e Shlyerjes");
+
+            IntStream.range(0, debts.size())
+                    .forEach(i -> {
+                        DebtDto debt = debts.get(i);
+                        Row row = sheet.createRow(i + 1);
+                        row.createCell(0).setCellValue(i + 1);
+                        row.createCell(1).setCellValue(debt.getName());
+                        row.createCell(2).setCellValue(debt.getOriginalAmount().doubleValue());
+                        row.createCell(3).setCellValue(debt.getRemainingAmount().doubleValue());
+                        row.createCell(4).setCellValue(debt.getInterestRate().doubleValue());
+                        row.createCell(5).setCellValue(debt.getType());
+                        row.createCell(6).setCellValue(debt.getDueDate().toString());
+                    });
+            workbook.write(os);
+        }
+    }
+
+
 }

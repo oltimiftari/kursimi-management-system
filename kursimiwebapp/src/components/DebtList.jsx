@@ -1,32 +1,75 @@
-import {Layers2, Pencil, Plus, Trash2} from "lucide-react";
+import { Layers2, Pencil, Trash2, Download, Mail, LoaderCircle } from "lucide-react";
 import moment from "moment";
-import DebtOverview from "./DebtOverview.jsx";
+import { useState } from "react"; // Shto kete rresht
 
-const DebtList = ({ debts, onEditDebt, onDeleteDebt }) => {
+const DebtList = ({ debts, onDelete, onEdit, onDownload, onEmail }) => {
+    const [loading, setLoading] = useState(false); // Shto kete rresht
+
+    const handleEmail = async () => {
+        setLoading(true);
+        try {
+            await onEmail();
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleDownload = async () => {
+        setLoading(true);
+        try {
+            await onDownload();
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
-        <div className="card p-4">
+        <div className="card">
             <div className="flex items-center justify-between mb-4">
-                <h4 className="text-lg font-semibold">Borxhet</h4>
+                <h5 className="text-lg">Lista e Borxheve</h5>
+                <div className="flex items-center justify-end gap-2">
+                    <button disabled={loading} className="card-btn" onClick={handleEmail}>
+                        {loading ? (
+                            <>
+                                <LoaderCircle className="w-4 h-4 animate-spin"/>
+                                Duke dërguar në email...
+                            </>
+                        ) : (
+                            <>
+                                <Mail size={15} className="text-base" />
+                                Dërgo në email
+                            </>
+                        )}
+                    </button>
+                    <button disabled={loading} className="card-btn" onClick={handleDownload}>
+                        {loading ? (
+                            <>
+                                <LoaderCircle className="w-4 h-4 animate-spin"/>
+                                Duke shkarkuar…
+                            </>
+                        ) : (
+                            <>
+                                <Download size={15} className="text-base" />
+                                Shkarko
+                            </>
+                        )}
+                    </button>
+                </div>
             </div>
 
-
-            {/* Debt list */}
             {debts.length === 0 ? (
                 <p className="text-gray-500">
                     Ende nuk ke borxhe. Shto disa për të filluar!
                 </p>
-
             ) : (
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {debts.map((debt) => (
                         <div
                             key={debt.id}
-                            className="group relative flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100/60">
+                            className="group relative flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100/60"
+                        >
                             {/* Icon display*/}
                             <div className="w-12 h-12 flex items-center justify-center text-xl text-gray-800 bg-gray-100 rounded-full">
-                                {/* Mund te shtoni nje ikone qe perputhet me tipin e borxhit
-                                    p.sh., nje karte krediti ose nje simbol banke */}
                                 <Layers2 className="text-blue-600" size={24} />
                             </div>
 
@@ -48,13 +91,12 @@ const DebtList = ({ debts, onEditDebt, onDeleteDebt }) => {
                                 {/* Action buttons*/}
                                 <div className="flex items-center gap-2">
                                     <button
-                                        onClick={() => onEditDebt(debt)}
+                                        onClick={() => onEdit(debt)}
                                         className="text-gray-400 hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                         <Pencil size={18} />
                                     </button>
-
                                     <button
-                                        onClick={() => onDeleteDebt(debt.id)}
+                                        onClick={() => onDelete(debt.id)}
                                         className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                         <Trash2 size={18} />
                                     </button>
@@ -66,6 +108,6 @@ const DebtList = ({ debts, onEditDebt, onDeleteDebt }) => {
             )}
         </div>
     );
-}
+};
 
 export default DebtList;

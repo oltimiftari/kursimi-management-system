@@ -3,14 +3,17 @@ package in.oltimiftari.kursimi.controller;
 import in.oltimiftari.kursimi.dto.DebtDto;
 import in.oltimiftari.kursimi.service.DebtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.mail.MessagingException; // SHTO KËTË IMPORT
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/debts")
+@RequestMapping("/debts")
 public class DebtController {
 
     @Autowired
@@ -43,4 +46,30 @@ public class DebtController {
         debtService.deleteDebt(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> downloadDebtsReport() {
+        byte[] excelData = debtService.generateExcelReport();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", "debts_report.xlsx"); // Ndryshohet emri i skedarit
+        headers.setContentLength(excelData.length);
+
+        return new ResponseEntity<>(excelData, headers, HttpStatus.OK);
+    }
+
+
+    // Endpoint i ri per dergim me email
+    @PostMapping("/email")
+    public ResponseEntity<Void> emailDebtsReport() {
+        try {
+            debtService.emailDebtsReport();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (MessagingException e) {
+            // E rregulluar per te kapur gabimin e mundshem
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

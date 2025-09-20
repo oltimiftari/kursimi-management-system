@@ -6,9 +6,14 @@ import in.oltimiftari.kursimi.entity.ProfileEntity;
 import in.oltimiftari.kursimi.repository.DebtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.mail.MessagingException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class DebtService {
@@ -18,6 +23,13 @@ public class DebtService {
 
     @Autowired
     private ProfileService profileService;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private ExcelService excelService;
+
 
     // Metoda per krijimin e nje borxhi te ri
     public DebtDto createDebt(DebtDto debtDto) {
@@ -66,6 +78,35 @@ public class DebtService {
         return convertToDto(updatedDebt);
     }
 
+    // Metoda per te gjeneruar nje raport Excel
+    public byte[] generateExcelReport() {
+        List<DebtDto> debts = getDebtsByProfile(); // Marrja e borxheve ne format DTO
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+            excelService.writeDebtsToExcel(bos, debts);
+            return bos.toByteArray();
+        } catch (IOException e) {
+            throw new RuntimeException("Dështoi gjenerimi i raportit Excel", e);
+        }
+    }
+
+    @Transactional
+    public void emailDebtsReport() throws MessagingException {
+        byte[] excelData = generateExcelReport();
+        ProfileEntity currentProfile = profileService.getCurrentProfile();
+
+        String subject = "Raporti i Borxheve (Excel)";
+        String body = "Përshëndetje! Ja raporti juaj i borxheve në format Excel.";
+
+        emailService.sendEmailWithAttachment(
+                currentProfile.getEmail(),
+                subject,
+                body,
+                excelData,
+                "debts_report.xlsx" // Ndryshohet emri i skedarit
+        );
+    }
+
+
     // Metoda per te fshire nje borxh
     public void deleteDebt(Long id) {
         DebtEntity debt = debtRepository.findById(id)
@@ -76,6 +117,7 @@ public class DebtService {
         }
         debtRepository.deleteById(id);
     }
+
 
     // Metoda private per konvertimin e Entitetit ne DTO
     private DebtDto convertToDto(DebtEntity debt) {

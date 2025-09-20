@@ -7,9 +7,11 @@ import axiosConfig from "../util/axiosConfig.jsx";
 import Modal from "../components/Modal.jsx";
 import toast from "react-hot-toast";
 import DeleteAlert from "../components/DeleteAlert.jsx";
-import DebtList from "../components/DebtList.jsx";
 import AddDebtForm from "../components/AddDebtForm.jsx";
-import DebtOverview from "../components/DebtOverview.jsx";
+import axios from 'axios';
+import DebtList from "../components/DebtList.jsx";
+
+
 
 const Debt = () => {
 
@@ -98,16 +100,47 @@ const Debt = () => {
         }
     }
 
+    const handleDownloadReport = async () => {
+        try {
+            const response = await axiosConfig.get(API_ENDPOINTS.DOWNLOAD_DEBTS, {
+                responseType: 'blob', // E rendesishme per te shkarkuar nje file
+            });
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'debts_report.xlsx');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            toast.success("Raporti u shkarkua me sukses!");
+        } catch (error) {
+            console.error("Gabim gjate shkarkimit te raportit:", error);
+            toast.error("Dështoi shkarkimi i raportit.");
+        }
+    };
+
+    const handleEmailReport = async () => {
+        try {
+            await axiosConfig.post(API_ENDPOINTS.EMAIL_DEBTS);
+            toast.success("Raporti u dërgua në emailin tuaj!");
+        } catch (error) {
+            console.error("Gabim gjate dergimit te emailit:", error);
+            toast.error("Dështoi dërgimi i emailit.");
+        }
+    };
+
 
 
     return (
         <Dashboard activeMenu="Borxhet">
             <div className="my-5 mx-auto">
-                <DebtOverview
+
+                <DebtList
                     debts={debtData}
-                    onAddDebt={() => setOpenAddDebtModal(true)}
-                    onEditDebt={handleEditDebt}
-                    onDeleteDebt={(id) => setOpenDeleteAlert({ show: true, data: id })}
+                    onDelete={deleteDebt}
+                    onEdit={handleEditDebt}
+                    onDownload={handleDownloadReport}
+                    onEmail={handleEmailReport}
                 />
 
                 {/* Adding debt modal*/}
