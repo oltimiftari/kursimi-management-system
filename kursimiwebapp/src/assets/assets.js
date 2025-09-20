@@ -1,7 +1,7 @@
 import logo from "./logo.png";
 import login_bg from "./login_bg.png";
 import logo2 from "./logo2.png";
-import {Coins, FunnelPlus, GoalIcon, HandCoinsIcon, LayoutDashboard, List, Wallet} from "lucide-react";
+import {Coins, FunnelPlus, GoalIcon, HandCoinsIcon, HatGlassesIcon, LayoutDashboard, List, Wallet} from "lucide-react";
 
 export const assets = {
     logo,
@@ -35,19 +35,25 @@ export const SIDE_BAR_DATA = [
         path: "/expense",
     },
     {
-        id: "06",
+        id: "05",
         label: "Borxhet",
         icon: HandCoinsIcon,
         path: "/debts",
     },
     {
-        id: "05",
+        id: "06",
+        label: "Investimet",
+        icon: HatGlassesIcon,
+        path: "/investments",
+    },
+    {
+        id: "07",
         label: "Qëllimet",
         icon: GoalIcon,
         path: "/goals",
     },
     {
-        id: "07",
+        id: "08",
         label: "Zgjedh Filtërat",
         icon: FunnelPlus,
         path: "/filter",

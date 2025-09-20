@@ -6,7 +6,8 @@ import in.oltimiftari.kursimi.entity.ProfileEntity;
 import in.oltimiftari.kursimi.repository.GoalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Sort;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +56,12 @@ public class GoalService {
             throw new RuntimeException("Nuk keni te drejte te fshini kete objektiv.");
         }
         goalRepository.deleteById(id);
+    }
+
+    public List<GoalDto> filterGoals(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<GoalEntity> list = goalRepository.findByProfileIdAndTargetDateBetweenAndGoalNameContainingIgnoreCase(profile.getId(), startDate, endDate, keyword, sort);
+        return list.stream().map(this::convertToDto).toList();
     }
 
     private GoalDto convertToDto(GoalEntity goal) {

@@ -7,6 +7,9 @@ import in.oltimiftari.kursimi.repository.DebtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Sort;
+import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.mail.MessagingException;
 import java.io.ByteArrayOutputStream;
@@ -116,6 +119,12 @@ public class DebtService {
             throw new RuntimeException("Nuk keni te drejte te fshini kete borxh.");
         }
         debtRepository.deleteById(id);
+    }
+
+    public List<DebtDto> filterDebts(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<DebtEntity> list = debtRepository.findByProfileIdAndDueDateBetweenAndNameContainingIgnoreCase(profile.getId(), startDate, endDate, keyword, sort);
+        return list.stream().map(this::convertToDto).toList();
     }
 
 

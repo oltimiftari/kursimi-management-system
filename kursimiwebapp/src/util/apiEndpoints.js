@@ -29,6 +29,8 @@ export const API_ENDPOINTS = {
     DEBT_BY_ID: (id) => `/debts/${id}`,
     DOWNLOAD_DEBTS: '/debts/download',
     EMAIL_DEBTS: '/debts/email',
+    INVESTMENTS: '/investments',
+    INVESTMENT_BY_ID: (id) => `/investments/${id}`,
     APPLY_FILTERS: "/filter",
     DASHBOARD_DATA: "/dashboard",
     UPLOAD_IMAGE: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`

@@ -9,6 +9,7 @@ import {Toaster} from "react-hot-toast";
 import Home from "./pages/Home.jsx";
 import Goal from "./pages/Goal.jsx";
 import Debt from "./pages/Debt.jsx";
+import Investments from "./pages/Investments.jsx";
 
 const App = () => {
     return(
@@ -24,6 +25,7 @@ const App = () => {
                     <Route path="/filter" element={<Filter />} />
                     <Route path="/goals" element={<Goal />} />
                     <Route path="/debts" element={<Debt />} />
+                    <Route path="/investments" element={<Investments />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                 </Routes>

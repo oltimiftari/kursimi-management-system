@@ -5,38 +5,34 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "tbl_goals")
-public class GoalEntity {
+@Table(name = "tbl_investments")
+public class InvestmentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String goalName;
-    private BigDecimal targetAmount;
-    private BigDecimal savedAmount;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private String icon;
-    private LocalDate targetDate;
-    private Boolean isAchieved;
 
+    private String assetName;
+    private String tickerSymbol;
+    private BigDecimal initialAmount;
+    private BigDecimal sharesOwned;
+    private LocalDate purchaseDate;
 
     @Column(updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
-
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
@@ -46,14 +42,8 @@ public class GoalEntity {
 
     @PrePersist
     public void prePersist() {
-        if(this.startDate == null) {
-            this.startDate = LocalDate.now();
-        }
-        if(this.savedAmount == null) {
-            this.savedAmount = BigDecimal.ZERO;
-        }
-        if(this.isAchieved == null) {
-            this.isAchieved = false;
+        if(this.purchaseDate == null) {
+            this.purchaseDate = LocalDate.now();
         }
     }
 }

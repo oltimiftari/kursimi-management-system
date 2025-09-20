@@ -13,6 +13,8 @@ import toast from "react-hot-toast";
 const Filter = () => {
     useUser();
 
+
+
     const [type, setType] = useState("income");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
