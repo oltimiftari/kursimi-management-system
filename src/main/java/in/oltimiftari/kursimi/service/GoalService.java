@@ -58,6 +58,32 @@ public class GoalService {
         goalRepository.deleteById(id);
     }
 
+    public GoalDto updateGoal(Long id, GoalDto updatedGoalDto) {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        System.out.println("ID e objektivit në kërkesë: " + id);
+        System.out.println("ID e profilit aktual: " + profile.getId());
+
+        // Gjen objektivin ekzistues duke përdorur ID-në dhe ID-në e profilit
+        GoalEntity existingGoal = goalRepository.findByIdAndProfileId(id, profile.getId())
+                .orElseThrow(() -> new RuntimeException("Goal not found or not accessible."));
+
+        existingGoal.setGoalName(updatedGoalDto.getGoalName());
+        existingGoal.setTargetAmount(updatedGoalDto.getTargetAmount());
+        existingGoal.setSavedAmount(updatedGoalDto.getSavedAmount());
+        existingGoal.setEndDate(updatedGoalDto.getEndDate());
+        existingGoal.setIcon(updatedGoalDto.getIcon());
+
+        if (existingGoal.getSavedAmount().compareTo(existingGoal.getTargetAmount()) >= 0) {
+            existingGoal.setIsAchieved(true);
+        } else {
+            existingGoal.setIsAchieved(false);
+        }
+
+        GoalEntity savedGoal = goalRepository.save(existingGoal);
+
+        return convertToDto(savedGoal);
+    }
+
     public List<GoalDto> filterGoals(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
         ProfileEntity profile = profileService.getCurrentProfile();
         List<GoalEntity> list = goalRepository.findByProfileIdAndTargetDateBetweenAndGoalNameContainingIgnoreCase(profile.getId(), startDate, endDate, keyword, sort);

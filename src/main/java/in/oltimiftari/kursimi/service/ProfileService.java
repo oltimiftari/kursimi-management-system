@@ -38,8 +38,8 @@ public class ProfileService {
 
         // send activation email
         String activationLink = activationURL+"/api/v1.0/activate?token=" + newProfile.getActivationToken();
-        String subject = "Activate your Kursimi account";
-        String body = "Click on the following link to activate your account: " + activationLink;
+        String subject = "Aktivizo llogarinë tënde në Kursimi";
+        String body = "Kliko në linkun më poshtë për të aktivizuar llogarinë tënde: " + activationLink;
         emailService.sendEmail(newProfile.getEmail(), subject, body);
         return toDTO(newProfile);
     }
@@ -84,7 +84,7 @@ public class ProfileService {
     public ProfileEntity getCurrentProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return profileRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("Profile not found with email: " + authentication.getName()));
+                .orElseThrow(() -> new UsernameNotFoundException("Nuk u gjet asnjë profil me këtë email: " + authentication.getName()));
     }
 
     public ProfileDTO getPublicProfile(String email)
@@ -94,7 +94,7 @@ public class ProfileService {
             currentUser = getCurrentProfile();
         } else{
             currentUser = profileRepository.findByEmail(email)
-                    .orElseThrow(() -> new UsernameNotFoundException("Profile not found with email: " + email));
+                    .orElseThrow(() -> new UsernameNotFoundException("Nuk u gjet asnjë profil me këtë email: " + email));
         }
         return ProfileDTO.builder()
                 .id(currentUser.getId())
@@ -114,7 +114,7 @@ public class ProfileService {
             return Map.of( "token", token,
                     "user", getPublicProfile(authDTO.getEmail()) );
         } catch (Exception e) {
-            throw new RuntimeException("Invalid email or password");
+            throw new RuntimeException("Email-i ose fjalëkalimi është gabim");
         }
     }
 }

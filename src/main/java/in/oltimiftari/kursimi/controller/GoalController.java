@@ -27,6 +27,12 @@ public class GoalController {
         return ResponseEntity.ok(goals);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<GoalDto> updateGoal(@PathVariable Long id, @RequestBody GoalDto goalDto) {
+        GoalDto updatedGoal = goalService.updateGoal(id, goalDto);
+        return ResponseEntity.ok(updatedGoal);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGoal(@PathVariable Long id) {
         goalService.deleteGoal(id); // Kjo metode duhet shtuar edhe ne GoalService

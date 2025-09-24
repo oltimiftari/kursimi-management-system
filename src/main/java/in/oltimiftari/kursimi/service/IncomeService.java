@@ -27,7 +27,7 @@ public class IncomeService {
     public IncomeDTO addIncome(IncomeDTO dto) {
         ProfileEntity profile = profileService.getCurrentProfile();
         CategoryEntity category = categoryRepository.findById(dto.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found "));
+                .orElseThrow(() -> new RuntimeException("Kategoria nuk u gjet "));
         IncomeEntity newExpense = toEntity(dto, profile, category);
         newExpense = incomeRepository.save(newExpense);
         return  toDTO(newExpense);
@@ -49,9 +49,9 @@ public class IncomeService {
     public  void deleteIncome(Long incomeId) {
         ProfileEntity profile = profileService.getCurrentProfile();
         IncomeEntity entity = incomeRepository.findById(incomeId)
-                .orElseThrow(() -> new RuntimeException("Income not found"));
+                .orElseThrow(() -> new RuntimeException("Të ardhurat nuk u gjetën"));
         if(!entity.getProfile().getId().equals(profile.getId())){
-            throw new RuntimeException("Unauthorized to delete this income");
+            throw new RuntimeException("Nuk ke leje për të fshirë këto të ardhura");
         }
         incomeRepository.delete(entity);
     }

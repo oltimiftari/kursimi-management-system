@@ -24,6 +24,7 @@ export const API_ENDPOINTS = {
     EXPENSE_EXCEL_DOWNLOAD: "excel/download/expense",
     EMAIL_EXPENSE: "/email/expense-excel",
     GOALS: "/goals",
+    UPDATE_GOAL: (goalId) => `/goals/${goalId}`,
     DELETE_GOAL: (goalId) => `/goals/${goalId}`,
     DEBTS: '/debts',
     DEBT_BY_ID: (id) => `/debts/${id}`,

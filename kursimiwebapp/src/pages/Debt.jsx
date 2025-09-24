@@ -1,20 +1,16 @@
 import Dashboard from "../components/Dashboard.jsx";
-import {useUser} from "../hooks/useUser.jsx";
-import {Plus} from "lucide-react";
-import {useEffect, useState} from "react";
-import {API_ENDPOINTS} from "../util/apiEndpoints.js";
+import { useUser } from "../hooks/useUser.jsx";
+import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { API_ENDPOINTS } from "../util/apiEndpoints.js";
 import axiosConfig from "../util/axiosConfig.jsx";
 import Modal from "../components/Modal.jsx";
 import toast from "react-hot-toast";
 import DeleteAlert from "../components/DeleteAlert.jsx";
 import AddDebtForm from "../components/AddDebtForm.jsx";
-import axios from 'axios';
 import DebtList from "../components/DebtList.jsx";
 
-
-
 const Debt = () => {
-
     useUser();
     const [loading, setLoading] = useState(false);
     const [debtData, setDebtData] = useState([]);
@@ -129,11 +125,17 @@ const Debt = () => {
         }
     };
 
-
-
     return (
         <Dashboard activeMenu="Borxhet">
             <div className="my-5 mx-auto">
+
+                {/* Ky është DIV-i i ri ku vendoset butoni "Shto Borxh" */}
+                <div className="flex justify-end mb-4">
+                    <button className="add-btn" onClick={() => setOpenAddDebtModal(true)}>
+                        <Plus size={15} />
+                        Shto Borxh
+                    </button>
+                </div>
 
                 <DebtList
                     debts={debtData}
@@ -143,7 +145,7 @@ const Debt = () => {
                     onEmail={handleEmailReport}
                 />
 
-                {/* Adding debt modal*/}
+                {/* Modalet mbeten pa ndryshuar */}
                 <Modal
                     isOpen={openAddDebtModal}
                     onClose={() => setOpenAddDebtModal(false)}
@@ -152,7 +154,6 @@ const Debt = () => {
                     <AddDebtForm onAddDebt={handleAddDebt}/>
                 </Modal>
 
-                {/* Updating debt modal*/}
                 <Modal
                     onClose={() =>{
                         setOpenEditDebtModal(false);
@@ -168,7 +169,6 @@ const Debt = () => {
                     />
                 </Modal>
 
-                {/* Delete debt modal */}
                 <Modal
                     isOpen={openDeleteAlert.show}
                     onClose={() => setOpenDeleteAlert({show: false, data: null})}
@@ -181,7 +181,7 @@ const Debt = () => {
                 </Modal>
             </div>
         </Dashboard>
-    )
-}
+    );
+};
 
 export default Debt;

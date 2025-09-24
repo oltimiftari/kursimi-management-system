@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
-import in.oltimiftari.kursimi.dto.DebtDto; // SHTO KËTË IMPORT
+import in.oltimiftari.kursimi.dto.DebtDto;
 
 
 import java.io.IOException;
@@ -18,15 +18,16 @@ import java.util.stream.IntStream;
 @Service
 public class ExcelService {
 
+    //METODA PER SHKRIMIN E TE ARDHURAVE NE EXCEL
     public void writeIncomesToExcel(OutputStream os, List<IncomeDTO> incomes) throws IOException {
         try(Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Incomes");
+            Sheet sheet = workbook.createSheet("Të ardhurat");
             Row header = sheet.createRow(0);
             header.createCell(0).setCellValue("S.No");
-            header.createCell(1).setCellValue("Name");
-            header.createCell(2).setCellValue("Category");
-            header.createCell(3).setCellValue("Amount");
-            header.createCell(4).setCellValue("Date");
+            header.createCell(1).setCellValue("Emri");
+            header.createCell(2).setCellValue("Kategoria");
+            header.createCell(3).setCellValue("Shuma");
+            header.createCell(4).setCellValue("Data");
             IntStream.range(0, incomes.size())
                     .forEach(i -> {
                         IncomeDTO income = incomes.get(i);
@@ -41,15 +42,16 @@ public class ExcelService {
         }
     }
 
+    //METODA PER SHKRIMIN E SHPENZIMEVE NE EXCEL
     public void writeExpensesToExcel(OutputStream os, List<ExpenseDTO> expenses) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Expenses");
+            Sheet sheet = workbook.createSheet("Shpenzimet");
             Row header = sheet.createRow(0);
             header.createCell(0).setCellValue("S.No");
-            header.createCell(1).setCellValue("Name");
-            header.createCell(2).setCellValue("Category");
-            header.createCell(3).setCellValue("Amount");
-            header.createCell(4).setCellValue("Date");
+            header.createCell(1).setCellValue("Emri");
+            header.createCell(2).setCellValue("Kategoria");
+            header.createCell(3).setCellValue("Shuma");
+            header.createCell(4).setCellValue("Data");
             IntStream.range(0, expenses.size())
                     .forEach(i -> {
                         ExpenseDTO expense = expenses.get(i);
@@ -66,10 +68,10 @@ public class ExcelService {
         }
     }
 
-    // METODA E RE PËR BORXHET
+    // METODA PER SHKRIMIN E BORXHEVE NE EXCEL
     public void writeDebtsToExcel(OutputStream os, List<DebtDto> debts) throws IOException {
         try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Debts");
+            Sheet sheet = workbook.createSheet("Borxhet");
             Row header = sheet.createRow(0);
             header.createCell(0).setCellValue("S.No");
             header.createCell(1).setCellValue("Emri");

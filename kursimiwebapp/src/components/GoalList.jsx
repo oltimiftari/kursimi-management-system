@@ -1,8 +1,8 @@
 import React from 'react';
-import { PlusCircle, Trash2 } from "lucide-react";
+import { PlusCircle, Trash2, Pencil } from "lucide-react";
 import moment from "moment";
 
-const GoalList = ({ goals, onAddGoal, onDelete }) => {
+const GoalList = ({ goals, onAddGoal, onDelete, onEdit }) => {
     return(
         <div className="card">
             <div className="flex items-center justify-between">
@@ -19,7 +19,6 @@ const GoalList = ({ goals, onAddGoal, onDelete }) => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 mt-4 gap-4">
-                {/* display the goals */}
                 {goals?.length === 0 ? (
                     <p className="text-gray-500 col-span-2 text-center">Nuk ka objektiva të shtuara ende.</p>
                 ) : (
@@ -31,9 +30,7 @@ const GoalList = ({ goals, onAddGoal, onDelete }) => {
                             <div key={goal.id} className="bg-white p-6 rounded-2xl shadow-md border border-gray-200/50">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-4">
-                                        {/* Stili i ikonës tani është si te shpenzimet, pa ngjyrë të fortë */}
                                         <div className={`w-14 h-14 flex items-center justify-center text-[26px] rounded-full drop-shadow-xl ${goal.icon ? 'bg-gray-200' : 'bg-gray-200'}`}>
-                                            {/* Përdorim img për të shfaqur ikonën e zgjedhur nga përdoruesi */}
                                             {goal.icon ? (
                                                 <img src={goal.icon} alt="Goal Icon" className="w-12 h-12" />
                                             ) : (
@@ -45,9 +42,17 @@ const GoalList = ({ goals, onAddGoal, onDelete }) => {
                                             <span className="text-xl font-semibold">{goal.goalName}</span>
                                         </div>
                                     </div>
-                                    <button onClick={() => onDelete(goal.id)} className="text-red-500 hover:text-red-700 cursor-pointer">
-                                        <Trash2 size={17} />
-                                    </button>
+                                    {/* Shtojmë dy butona aksioni */}
+                                    <div className="flex items-center gap-2">
+                                        {/* Butoni i editimit */}
+                                        <button onClick={() => onEdit(goal)} className="text-gray-400 hover:text-blue-500 cursor-pointer">
+                                            <Pencil size={17} />
+                                        </button>
+                                        {/* Butoni i fshirjes */}
+                                        <button onClick={() => onDelete(goal.id)} className="text-gray-400 hover:text-red-500 cursor-pointer">
+                                            <Trash2 size={17} />
+                                        </button>
+                                    </div>
                                 </div>
                                 <div className="mt-4">
                                     <p className="text-gray-600 font-medium">
@@ -73,6 +78,6 @@ const GoalList = ({ goals, onAddGoal, onDelete }) => {
             </div>
         </div>
     );
-}
+};
 
 export default GoalList;

@@ -1,10 +1,10 @@
-import {useState} from "react";
+import { useEffect, useState } from "react";
 import Input from "./Input.jsx";
-import {LoaderCircle} from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import EmojiPickerPopup from "./EmojiPickerPopup.jsx";
 
-const AddGoalForm = ({onAddGoal}) => {
+const AddGoalForm = ({ onAddGoal, initialGoalData, isEditing }) => {
     const [goal, setGoal] = useState({
         goalName: '',
         targetAmount: '',
@@ -15,11 +15,28 @@ const AddGoalForm = ({onAddGoal}) => {
 
     const [loading, setLoading] = useState(false);
 
-    const handleChange = (key, value) => {
-        setGoal({...goal, [key]: value});
-    }
+    // useEffect hook për të inicializuar gjendjen (state) kur komponenti është në modalin e editimit
+    useEffect(() => {
+        if (isEditing && initialGoalData) {
+            setGoal(initialGoalData);
+        } else {
+            // Përgatit gjendjen për shtimin e një qëllimi të ri
+            setGoal({
+                goalName: '',
+                targetAmount: '',
+                savedAmount: '',
+                endDate: '',
+                icon: '',
+            });
+        }
+    }, [isEditing, initialGoalData]);
 
-    const handleAddGoal = async () => {
+    const handleChange = (key, value) => {
+        setGoal({ ...goal, [key]: value });
+    };
+
+    const handleSubmit = async () => {
+        // Validimet
         if (!goal.goalName.trim()) {
             toast.error("Ju lutem, shkruani një emër për objektivin");
             return;
@@ -40,6 +57,12 @@ const AddGoalForm = ({onAddGoal}) => {
             return;
         }
 
+        const today = new Date().toISOString().split('T')[0];
+        if (goal.endDate < today) {
+            toast.error('Data e përfundimit nuk mund të jetë në të kaluarën');
+            return;
+        }
+
         setLoading(true);
         try {
             await onAddGoal(goal);
@@ -50,7 +73,6 @@ const AddGoalForm = ({onAddGoal}) => {
 
     return (
         <div>
-            {/* Ky komponent do te beje te mundur zgjedhjen e emojis */}
             <EmojiPickerPopup
                 icon={goal.icon}
                 onSelect={(selectedEmoji) => handleChange('icon', selectedEmoji)}
@@ -58,28 +80,28 @@ const AddGoalForm = ({onAddGoal}) => {
 
             <Input
                 value={goal.goalName}
-                onChange={({target}) => handleChange('goalName', target.value)}
+                onChange={({ target }) => handleChange('goalName', target.value)}
                 label="Emri i Objektivit"
                 placeholder="p.sh., Fondi për Pushime"
                 type="text"
             />
             <Input
                 value={goal.targetAmount}
-                onChange={({target}) => handleChange('targetAmount', target.value)}
+                onChange={({ target }) => handleChange('targetAmount', target.value)}
                 label="Shuma e Objektivit (€)"
                 placeholder="p.sh., 1500.00"
                 type="number"
             />
             <Input
                 value={goal.savedAmount}
-                onChange={({target}) => handleChange('savedAmount', target.value)}
+                onChange={({ target }) => handleChange('savedAmount', target.value)}
                 label="Shuma e Kursyer (€)"
                 placeholder="p.sh., 500.00"
                 type="number"
             />
             <Input
                 value={goal.endDate}
-                onChange={({target}) => handleChange('endDate', target.value)}
+                onChange={({ target }) => handleChange('endDate', target.value)}
                 label="Data e Përfundimit"
                 placeholder=""
                 type="date"
@@ -87,18 +109,18 @@ const AddGoalForm = ({onAddGoal}) => {
 
             <div className="flex justify-end mt-6">
                 <button
-                    onClick={handleAddGoal}
+                    onClick={handleSubmit}
                     disabled={loading}
                     className="add-btn add-btn-fill"
                 >
                     {loading ? (
                         <>
-                            <LoaderCircle className="w-4 h-4 animate-spin"/>
-                            Duke shtuar…
+                            <LoaderCircle className="w-4 h-4 animate-spin" />
+                            {isEditing ? "Duke përditësuar..." : "Duke shtuar..."}
                         </>
                     ) : (
                         <>
-                            Shto Objektiv
+                            {isEditing ? "Përditëso Objektivin" : "Shto Objektiv"}
                         </>
                     )}
                 </button>

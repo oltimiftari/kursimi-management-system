@@ -17,7 +17,7 @@ public class InvestmentService {
     private final InvestmentRepository investmentRepository;
     private final ProfileService profileService;
 
-    // Metoda per te shtuar nje investim të ri
+    // Metoda per te shtuar nje investim te ri
     public InvestmentDTO addInvestment(InvestmentDTO dto) {
         ProfileEntity profile = profileService.getCurrentProfile();
         InvestmentEntity newInvestment = toEntity(dto, profile);
@@ -36,10 +36,10 @@ public class InvestmentService {
     public void deleteInvestment(Long investmentId) {
         ProfileEntity profile = profileService.getCurrentProfile();
         InvestmentEntity entity = investmentRepository.findById(investmentId)
-                .orElseThrow(() -> new RuntimeException("Investment not found"));
+                .orElseThrow(() -> new RuntimeException("Nuk u gjet asnjë investim"));
 
         if (!entity.getProfile().getId().equals(profile.getId())) {
-            throw new RuntimeException("Unauthorized to delete this investment");
+            throw new RuntimeException("Nuk ke leje për të fshirë këtë investim");
         }
         investmentRepository.delete(entity);
     }
@@ -48,13 +48,13 @@ public class InvestmentService {
     public InvestmentDTO updateInvestment(InvestmentDTO dto) {
         ProfileEntity profile = profileService.getCurrentProfile();
         InvestmentEntity existingInvestment = investmentRepository.findById(dto.getId())
-                .orElseThrow(() -> new RuntimeException("Investment not found"));
+                .orElseThrow(() -> new RuntimeException("Nuk u gjet asnjë investim"));
 
         if (!existingInvestment.getProfile().getId().equals(profile.getId())) {
-            throw new RuntimeException("Unauthorized to update this investment");
+            throw new RuntimeException("Nuk ke leje për të përditësuar këtë investim");
         }
 
-        // Perditëso fushat e entitetit me te dhenat e reja
+        // Perditeso fushat e entitetit me te dhenat e reja
         existingInvestment.setAssetName(dto.getAssetName());
         existingInvestment.setTickerSymbol(dto.getTickerSymbol());
         existingInvestment.setInitialAmount(dto.getInitialAmount());

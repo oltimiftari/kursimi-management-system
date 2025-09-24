@@ -15,7 +15,7 @@ const Expense = () => {
     useUser();
     const navigate = useNavigate();
     const [expenseData, setExpenseData] = useState([]);
-    const [categories, setCategories] = useState([]); // New state for expense categories
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [openAddExpenseModal, setOpenAddExpenseModal] = useState(false);
     const [openDeleteAlert, setOpenDeleteAlert] = useState({
@@ -63,7 +63,7 @@ const Expense = () => {
 
     // Handle Add Expense
     const handleAddExpense = async (expense) => {
-        const { name, categoryId, amount, date, icon } = expense; // Changed 'category' to 'categoryId'
+        const { name, categoryId, amount, date, icon } = expense;
 
         if (!name.trim()) {
             toast.error("Vendosni një emër për të vazhduar.");
@@ -95,15 +95,15 @@ const Expense = () => {
         try {
             await axiosConfig.post(API_ENDPOINTS.ADD_EXPENSE, {
                 name,
-                categoryId, // Pass categoryId to the API
-                amount: Number(amount), // Ensure amount is a number
+                categoryId,
+                amount: Number(amount),
                 date,
                 icon,
             });
 
             setOpenAddExpenseModal(false);
             toast.success("Shpenzimi u shtua me sukses");
-            fetchExpenseDetails(); // Refresh expense list
+            fetchExpenseDetails();
             fetchExpenseCategories();
         } catch (error) {
             console.error(
@@ -134,20 +134,20 @@ const Expense = () => {
     const handleDownloadExpenseDetails = async () => {
         try {
             const response = await axiosConfig.get(
-                API_ENDPOINTS.EXPENSE_EXCEL_DOWNLOAD, // Ensure this path is correct, e.g., "/download/income"
+                API_ENDPOINTS.EXPENSE_EXCEL_DOWNLOAD,
                 {
-                    responseType: "blob", // Important: tells Axios to expect binary data
+                    responseType: "blob",
                 }
             );
 
-            // Extract filename from Content-Disposition header, or use a default
+
             let filename = "expense_details.xlsx"; // Default filename
 
             // Create a URL for the blob
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement("a");
             link.href = url;
-            link.setAttribute("download", filename); // Use the extracted or default filename
+            link.setAttribute("download", filename);
             document.body.appendChild(link);
             link.click(); // Programmatically click the link to trigger download
             link.parentNode.removeChild(link); // Clean up the link element
@@ -174,7 +174,7 @@ const Expense = () => {
 
     useEffect(() => {
         fetchExpenseDetails();
-        fetchExpenseCategories(); // Fetch categories when component mounts
+        fetchExpenseCategories();
     }, []);
 
     return (
@@ -205,7 +205,7 @@ const Expense = () => {
                         {/* Pass the fetched expense categories to the AddExpenseForm */}
                         <AddExpenseForm
                             onAddExpense={handleAddExpense}
-                            categories={categories} // Pass categories here
+                            categories={categories}
                         />
                     </Modal>
 

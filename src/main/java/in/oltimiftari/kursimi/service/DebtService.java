@@ -105,7 +105,7 @@ public class DebtService {
                 subject,
                 body,
                 excelData,
-                "debts_report.xlsx" // Ndryshohet emri i skedarit
+                "debts_report.xlsx"
         );
     }
 

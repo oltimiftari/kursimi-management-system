@@ -1,9 +1,9 @@
-import { Layers2, Pencil, Trash2, Download, Mail, LoaderCircle } from "lucide-react";
+import { Layers2, Pencil, Trash2, Download, Mail, LoaderCircle, Plus } from "lucide-react";
 import moment from "moment";
-import { useState } from "react"; // Shto kete rresht
+import { useState } from "react";
 
 const DebtList = ({ debts, onDelete, onEdit, onDownload, onEmail }) => {
-    const [loading, setLoading] = useState(false); // Shto kete rresht
+    const [loading, setLoading] = useState(false);
 
     const handleEmail = async () => {
         setLoading(true);
@@ -12,7 +12,7 @@ const DebtList = ({ debts, onDelete, onEdit, onDownload, onEmail }) => {
         } finally {
             setLoading(false);
         }
-    }
+    };
 
     const handleDownload = async () => {
         setLoading(true);
@@ -21,13 +21,17 @@ const DebtList = ({ debts, onDelete, onEdit, onDownload, onEmail }) => {
         } finally {
             setLoading(false);
         }
-    }
+    };
 
     return (
         <div className="card">
             <div className="flex items-center justify-between mb-4">
-                <h5 className="text-lg">Lista e Borxheve</h5>
+                <div className="flex-1">
+                    <h5 className="text-lg">Lista e Borxheve</h5>
+                </div>
                 <div className="flex items-center justify-end gap-2">
+
+                    {/* Butoni "Dërgo në email" */}
                     <button disabled={loading} className="card-btn" onClick={handleEmail}>
                         {loading ? (
                             <>
@@ -41,6 +45,7 @@ const DebtList = ({ debts, onDelete, onEdit, onDownload, onEmail }) => {
                             </>
                         )}
                     </button>
+                    {/* Butoni "Shkarko" */}
                     <button disabled={loading} className="card-btn" onClick={handleDownload}>
                         {loading ? (
                             <>
