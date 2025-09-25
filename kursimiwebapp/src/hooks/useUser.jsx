@@ -37,4 +37,7 @@ import {API_ENDPOINTS} from "../util/apiEndpoints.js";
             isMounted = false;
         }
     }, [setUser, clearUser, navigate]);
-}
+
+        return { user, setUser, clearUser };
+
+    }

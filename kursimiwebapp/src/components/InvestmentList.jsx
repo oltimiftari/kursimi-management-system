@@ -1,6 +1,5 @@
 import { Layers2, Pencil, Trash2 } from "lucide-react";
 import moment from "moment";
-import {Plus} from "lucide-react";
 
 
 const InvestmentList = ({ investments, onDelete, onEdit }) => {
@@ -38,7 +37,7 @@ const InvestmentList = ({ investments, onDelete, onEdit }) => {
                                     </p>
                                     <p className="text-sm font-semibold mt-1">
                                         {investment.initialAmount.toLocaleString('sq-AL', { style: 'currency', currency: 'EUR' })}
-                                        {/* Këtu mund të shtohen të dhënat e profit/loss pas integrimit me API */}
+
                                     </p>
                                 </div>
                                 {/* Action buttons*/}

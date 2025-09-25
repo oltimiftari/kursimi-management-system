@@ -14,9 +14,9 @@ const RecentTransactions = ({transactions, onMore}) => {
             </div>
 
             <div className="mt-6">
-                {transactions?.slice(0, 5)?.map(item => (
+                {transactions?.slice(0, 5)?.map((item, index) => (
                     <TransactionInfoCard
-                        key={item.id}
+                        key={`${item.id}-${index}`}
                         title={item.name}
                         icon={item.icon}
                         date={moment(item.date).format("Do MMM YYYY")}

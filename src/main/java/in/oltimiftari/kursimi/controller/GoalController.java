@@ -35,7 +35,7 @@ public class GoalController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGoal(@PathVariable Long id) {
-        goalService.deleteGoal(id); // Kjo metode duhet shtuar edhe ne GoalService
+        goalService.deleteGoal(id);
         return ResponseEntity.noContent().build();
     }
 }

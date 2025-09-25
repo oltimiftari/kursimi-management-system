@@ -27,7 +27,7 @@ public class ExpenseService {
     public  ExpenseDTO addExpense(ExpenseDTO dto) {
         ProfileEntity profile = profileService.getCurrentProfile();
         CategoryEntity category = categoryRepository.findById(dto.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found "));
+                .orElseThrow(() -> new RuntimeException("Nuk u gjet asnjë kategori"));
        ExpenseEntity newExpense = toEntity(dto, profile, category);
        newExpense = expenseRepository.save(newExpense);
        return  toDTO(newExpense);
@@ -50,9 +50,9 @@ public class ExpenseService {
     public  void deleteExpense(Long expenseId) {
         ProfileEntity profile = profileService.getCurrentProfile();
         ExpenseEntity entity = expenseRepository.findById(expenseId)
-                .orElseThrow(() -> new RuntimeException("Expense not found"));
+                .orElseThrow(() -> new RuntimeException("Nuk u gjet asnjë shpenzim"));
         if(!entity.getProfile().getId().equals(profile.getId())){
-            throw new RuntimeException("Unauthorized to delete this expense");
+            throw new RuntimeException("Nuk ke leje për të fshirë këtë shpenzim");
         }
         expenseRepository.delete(entity);
     }

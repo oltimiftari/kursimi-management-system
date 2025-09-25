@@ -32,7 +32,7 @@ public class InvestmentService {
         return investments.stream().map(this::toDTO).toList();
     }
 
-    // Metoda per të fshire nje investim
+    // Metoda per te fshire nje investim
     public void deleteInvestment(Long investmentId) {
         ProfileEntity profile = profileService.getCurrentProfile();
         InvestmentEntity entity = investmentRepository.findById(investmentId)
@@ -54,7 +54,7 @@ public class InvestmentService {
             throw new RuntimeException("Nuk ke leje për të përditësuar këtë investim");
         }
 
-        // Perditeso fushat e entitetit me te dhenat e reja
+
         existingInvestment.setAssetName(dto.getAssetName());
         existingInvestment.setTickerSymbol(dto.getTickerSymbol());
         existingInvestment.setInitialAmount(dto.getInitialAmount());

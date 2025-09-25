@@ -18,10 +18,10 @@ const uploadProfileImage = async (image) => {
         }
 
         const data = await response.json();
-        console.log('Image uploaded successfully.', data);
+        console.log('Fotoja u ngarkua me sukses.', data);
         return data.secure_url;
     } catch (error) {
-        console.error("Error uploading the image", error);
+        console.error("Gabim gjatë ngarkimit të fotos", error);
         throw error;
     }
 }

@@ -27,7 +27,7 @@ public class DebtEntity {
     private BigDecimal originalAmount;
     private BigDecimal remainingAmount;
     private BigDecimal interestRate;
-    private String type; // P.sh., "Kartë Krediti", "Huasë Personale"
+    private String type;
     private LocalDate dueDate;
 
     @Column(updatable = false)

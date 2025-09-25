@@ -6,9 +6,7 @@ import in.oltimiftari.kursimi.entity.CategoryEntity;
 import in.oltimiftari.kursimi.entity.ProfileEntity;
 import in.oltimiftari.kursimi.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,12 +19,18 @@ public class CategoryService {
         private final CategoryRepository categoryRepository;
 
 
+
+    public CategoryEntity getCategoryById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Kategoria nuk u gjet."));
+    }
+
         //save category
 
         public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
             ProfileEntity profile = profileService.getCurrentProfile();
             if (categoryRepository.existsByNameAndProfileId(categoryDTO.getName(), profile.getId())) {
-                throw new RuntimeException("Category with this name already exists");
+                throw new RuntimeException("Ekziston tashmë një kategori me këtë emër");
             }
 
             CategoryEntity newCategory = toEntity(categoryDTO, profile);
@@ -51,7 +55,7 @@ public class CategoryService {
     public  CategoryDTO updateCategory(Long categoryId, CategoryDTO dto) {
            ProfileEntity profile = profileService.getCurrentProfile();
             CategoryEntity existingCategory = categoryRepository.findByIdAndProfileId(categoryId, profile.getId())
-                    .orElseThrow(() -> new RuntimeException("Category not found or not accessible"));
+                    .orElseThrow(() -> new RuntimeException("Nuk u gjet ose nuk lejohet qasja në këtë kategori"));
             existingCategory.setName(dto.getName());
             existingCategory.setIcon(dto.getIcon());
             categoryRepository.save(existingCategory);
@@ -63,9 +67,9 @@ public class CategoryService {
     public  void deleteCategory(Long categoryId) {
         ProfileEntity profile = profileService.getCurrentProfile();
         CategoryEntity entity = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new RuntimeException("Nuk u gjet asnjë kategori"));
         if(!entity.getProfile().getId().equals(profile.getId())){
-            throw new RuntimeException("Unauthorized to delete this category");
+            throw new RuntimeException("Nuk ke leje për të fshirë këtë kategori");
         }
         categoryRepository.delete(entity);
     }

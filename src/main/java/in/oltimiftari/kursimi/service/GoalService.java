@@ -63,9 +63,9 @@ public class GoalService {
         System.out.println("ID e objektivit në kërkesë: " + id);
         System.out.println("ID e profilit aktual: " + profile.getId());
 
-        // Gjen objektivin ekzistues duke përdorur ID-në dhe ID-në e profilit
+
         GoalEntity existingGoal = goalRepository.findByIdAndProfileId(id, profile.getId())
-                .orElseThrow(() -> new RuntimeException("Goal not found or not accessible."));
+                .orElseThrow(() -> new RuntimeException("Nuk u gjet ose nuk lejohet qasja në këtë qëllim"));
 
         existingGoal.setGoalName(updatedGoalDto.getGoalName());
         existingGoal.setTargetAmount(updatedGoalDto.getTargetAmount());

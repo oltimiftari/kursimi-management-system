@@ -3,6 +3,7 @@ package in.oltimiftari.kursimi.controller;
 import in.oltimiftari.kursimi.service.ExcelService;
 import in.oltimiftari.kursimi.service.ExpenseService;
 import in.oltimiftari.kursimi.service.IncomeService;
+import in.oltimiftari.kursimi.service.SubscriptionService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,8 @@ public class ExcelController {
     private final ExcelService excelService;
     private final IncomeService incomeService;
     private final ExpenseService expenseService;
+    private final SubscriptionService subscriptionService;
+
 
     @GetMapping("/download/income")
     public void downloadIncomeExcel(HttpServletResponse response) throws IOException {
@@ -32,6 +35,13 @@ public class ExcelController {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setHeader("Content-Disposition", "attachment; filename=expense.xlsx");
         excelService.writeExpensesToExcel(response.getOutputStream(), expenseService.getCurrentMonthExpensesForCurrentUser());
+    }
+
+    @GetMapping("/download/subscription")
+    public void downloadSubscriptionExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=subscriptions.xlsx");
+        excelService.writeSubscriptionsToExcel(response.getOutputStream(), subscriptionService.getSubscriptionsByProfile());
     }
 }
 

@@ -1,7 +1,6 @@
 package in.oltimiftari.kursimi.repository;
 
 import in.oltimiftari.kursimi.entity.ExpenseEntity;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

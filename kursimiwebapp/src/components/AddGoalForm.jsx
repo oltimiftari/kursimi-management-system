@@ -15,12 +15,10 @@ const AddGoalForm = ({ onAddGoal, initialGoalData, isEditing }) => {
 
     const [loading, setLoading] = useState(false);
 
-    // useEffect hook për të inicializuar gjendjen (state) kur komponenti është në modalin e editimit
     useEffect(() => {
         if (isEditing && initialGoalData) {
             setGoal(initialGoalData);
         } else {
-            // Përgatit gjendjen për shtimin e një qëllimi të ri
             setGoal({
                 goalName: '',
                 targetAmount: '',

@@ -22,8 +22,9 @@ const AddCategoryForm = ({onAddCategory,initialCategoryData, isEditing}) => {
     }, [isEditing, initialCategoryData]);
 
     const categoryTypeOptions = [
-        {value: "income", label: "Income"},
-        {value: "expense", label: "Expense"},
+        {value: "income", label: "Të ardhurat"},
+        {value: "expense", label: "Shpenzimet"},
+        {value: "subscription", label: "Abonimet"},
     ]
 
     const handleChange = (key, value) => {

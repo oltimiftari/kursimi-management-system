@@ -99,7 +99,7 @@ const Debt = () => {
     const handleDownloadReport = async () => {
         try {
             const response = await axiosConfig.get(API_ENDPOINTS.DOWNLOAD_DEBTS, {
-                responseType: 'blob', // E rendesishme per te shkarkuar nje file
+                responseType: 'blob',
             });
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
@@ -128,8 +128,6 @@ const Debt = () => {
     return (
         <Dashboard activeMenu="Borxhet">
             <div className="my-5 mx-auto">
-
-                {/* Ky është DIV-i i ri ku vendoset butoni "Shto Borxh" */}
                 <div className="flex justify-end mb-4">
                     <button className="add-btn" onClick={() => setOpenAddDebtModal(true)}>
                         <Plus size={15} />
@@ -145,7 +143,6 @@ const Debt = () => {
                     onEmail={handleEmailReport}
                 />
 
-                {/* Modalet mbeten pa ndryshuar */}
                 <Modal
                     isOpen={openAddDebtModal}
                     onClose={() => setOpenAddDebtModal(false)}

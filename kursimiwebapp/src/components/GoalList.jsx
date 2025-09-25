@@ -42,7 +42,7 @@ const GoalList = ({ goals, onAddGoal, onDelete, onEdit }) => {
                                             <span className="text-xl font-semibold">{goal.goalName}</span>
                                         </div>
                                     </div>
-                                    {/* Shtojmë dy butona aksioni */}
+                                    {/* Shtojm dy butona aksioni */}
                                     <div className="flex items-center gap-2">
                                         {/* Butoni i editimit */}
                                         <button onClick={() => onEdit(goal)} className="text-gray-400 hover:text-blue-500 cursor-pointer">

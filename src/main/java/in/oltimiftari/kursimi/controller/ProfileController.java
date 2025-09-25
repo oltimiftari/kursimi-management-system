@@ -25,9 +25,9 @@ public class ProfileController {
     public ResponseEntity<String> activateProfile(@RequestParam String token) {
         boolean isActivated = profileService.activateProfile(token);
         if (isActivated) {
-            return ResponseEntity.ok("Profile activated successfully");
+            return ResponseEntity.ok("Profili u aktivizua me sukses");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Activation token not found or already used");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Kodi i aktivizimit nuk u gjet ose është përdorur tashmë");
         }
     }
 
@@ -38,7 +38,7 @@ public class ProfileController {
             {
                 return
                         ResponseEntity.status(HttpStatus.FORBIDDEN).body(
-                                Map.of( "message", "Account is not active.Please activate your account first." ));
+                                Map.of( "message", "Llogaria nuk është aktive. Ju lutem, aktivizoni llogarinë tuaj së pari." ));
             }
             Map<String, Object> response = profileService.authenticateAndGenerateToken(authDTO);
             return ResponseEntity.ok(response);

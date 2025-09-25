@@ -15,7 +15,7 @@ const Goal = () => {
     const [loading, setLoading] = useState(false);
 
     const [openAddGoalModal, setOpenAddGoalModal] = useState(false);
-    // Shtojmë state-in e ri për modalin e editimit dhe objektivin e përzgjedhur
+
     const [openEditGoalModal, setOpenEditGoalModal] = useState(false);
     const [selectedGoal, setSelectedGoal] = useState(null);
 
@@ -41,7 +41,7 @@ const Goal = () => {
     };
 
     const handleAddGoal = async (goal) => {
-        // Logjika e validimit është e njëjtë, prandaj mund ta lëmë siç është
+
         const { goalName, targetAmount, savedAmount, endDate, icon } = goal;
 
         if (!goalName.trim() || !targetAmount || isNaN(Number(targetAmount)) || Number(targetAmount) <= 0 || !endDate) {
@@ -91,7 +91,7 @@ const Goal = () => {
             return;
         }
 
-        // Logjika e validimit për përditësim
+
         if (!updatedGoal.goalName.trim() || !updatedGoal.targetAmount || isNaN(Number(updatedGoal.targetAmount)) || Number(updatedGoal.targetAmount) <= 0 || !updatedGoal.endDate) {
             toast.error("Ju lutem plotësoni fushat e detyrueshme me vlera të vlefshme.");
             return;
@@ -134,7 +134,7 @@ const Goal = () => {
                             goals={goalData}
                             onAddGoal={() => setOpenAddGoalModal(true)}
                             onDelete={(id) => setOpenDeleteAlert({ show: true, data: id })}
-                            onEdit={openEditModal} // Kalojmë funksionin e ri për editim
+                            onEdit={openEditModal}
                             loading={loading}
                         />
                     </div>

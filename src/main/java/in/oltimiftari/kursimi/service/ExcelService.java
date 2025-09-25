@@ -2,6 +2,7 @@ package in.oltimiftari.kursimi.service;
 
 import in.oltimiftari.kursimi.dto.ExpenseDTO;
 import in.oltimiftari.kursimi.dto.IncomeDTO;
+import in.oltimiftari.kursimi.dto.SubscriptionDTO;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -92,6 +93,29 @@ public class ExcelService {
                         row.createCell(4).setCellValue(debt.getInterestRate().doubleValue());
                         row.createCell(5).setCellValue(debt.getType());
                         row.createCell(6).setCellValue(debt.getDueDate().toString());
+                    });
+            workbook.write(os);
+        }
+    }
+
+    public void writeSubscriptionsToExcel(OutputStream os, List<SubscriptionDTO> subscriptions) throws IOException {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Abonimet");
+            Row header = sheet.createRow(0);
+            header.createCell(0).setCellValue("S.No");
+            header.createCell(1).setCellValue("Emri");
+            header.createCell(2).setCellValue("Kategoria");
+            header.createCell(3).setCellValue("Shuma");
+            header.createCell(4).setCellValue("Data");
+            IntStream.range(0, subscriptions.size())
+                    .forEach(i -> {
+                        SubscriptionDTO subscription = subscriptions.get(i);
+                        Row row = sheet.createRow(i + 1);
+                        row.createCell(0).setCellValue(i + 1);
+                        row.createCell(1).setCellValue(subscription.getName() != null ? subscription.getName() : "");
+                        row.createCell(2).setCellValue(subscription.getCategoryName() != null ? subscription.getCategoryName() : "N/A");
+                        row.createCell(3).setCellValue(subscription.getAmount() != null ? subscription.getAmount().doubleValue() : 0);
+                        row.createCell(4).setCellValue(subscription.getPaymentDate() != null ? subscription.getPaymentDate().toString() : "");
                     });
             workbook.write(os);
         }

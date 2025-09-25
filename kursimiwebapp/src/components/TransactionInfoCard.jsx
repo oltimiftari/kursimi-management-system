@@ -1,14 +1,24 @@
-import {Trash2, TrendingDown, TrendingUp, UtensilsCrossed} from "lucide-react";
-import {addThousandsSeparator} from "../util/util.js";
+import React from "react";
+import { Trash2, TrendingDown, TrendingUp, UtensilsCrossed } from "lucide-react";
+import { addThousandsSeparator } from "../util/util.js";
 
-const TransactionInfoCard = ({icon, title, date, amount, type, hideDeleteBtn, onDelete}) => {
-    const getAmountStyles = () => type === 'income'? 'bg-green-50 text-green-800': 'bg-red-50 text-red-800';
+const TransactionInfoCard = ({ icon, title, date, amount, type, hideDeleteBtn, onDelete }) => {
+    const getAmountStyles = () => type === 'income' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800';
+
+    const isReactComponent = typeof icon === 'function';
+
     return(
         <div className="group relative flex items-center gap-4 mt-2 p-3 rounded-lg hover:bg-gray-100/60">
             <div className="w-12 h-12 flex items-center justify-center text-xl text-gray-800 bg-gray-100 rounded-full">
                 {icon ? (
-                    <img src={icon} alt={title} className="w-6 h-6" />
-                ): (
+                    isReactComponent ? (
+                        <div className="p-2 rounded-lg">
+                            {React.createElement(icon, {size: 25, className: "text-gray-600"})}
+                        </div>
+                    ) : (
+                        <img src={icon} alt={title} className="w-6 h-6" />
+                    )
+                ) : (
                     <UtensilsCrossed className="text-yellow-600" />
                 )}
             </div>
@@ -17,7 +27,7 @@ const TransactionInfoCard = ({icon, title, date, amount, type, hideDeleteBtn, on
                 <div>
                     <p className="text-sm text-gray-700 font-medium">{title}</p>
                     <p className="text-xs text-gray-400 mt-1">{date}</p>
-                   </div>
+                </div>
 
                 <div className="flex items-center gap-2">
                     {!hideDeleteBtn && (
@@ -30,18 +40,18 @@ const TransactionInfoCard = ({icon, title, date, amount, type, hideDeleteBtn, on
 
                     <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md ${getAmountStyles()}`}>
                         <h6 className="text-xs font-medium">
-                            {type === 'income' ? '+': '-'} {addThousandsSeparator(amount)}
+                            {type === 'income' ? '+' : '-'} {addThousandsSeparator(amount)}
                         </h6>
-                        {type === 'income'? (
+                        {type === 'income' ? (
                             <TrendingUp size={15} />
                         ) : (
-                            <TrendingDown size={15}/>
+                            <TrendingDown size={15} />
                         )}
-                        </div>
                     </div>
                 </div>
             </div>
-        )
+        </div>
+    )
 }
 
 export default TransactionInfoCard;

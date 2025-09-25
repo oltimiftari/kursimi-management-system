@@ -1,9 +1,7 @@
 package in.oltimiftari.kursimi.service;
 
-import in.oltimiftari.kursimi.dto.ExpenseDTO;
 import in.oltimiftari.kursimi.dto.IncomeDTO;
 import in.oltimiftari.kursimi.entity.CategoryEntity;
-import in.oltimiftari.kursimi.entity.ExpenseEntity;
 import in.oltimiftari.kursimi.entity.IncomeEntity;
 import in.oltimiftari.kursimi.entity.ProfileEntity;
 import in.oltimiftari.kursimi.repository.CategoryRepository;

@@ -1,6 +1,5 @@
 package in.oltimiftari.kursimi.controller;
 
-import in.oltimiftari.kursimi.dto.ExpenseDTO;
 import in.oltimiftari.kursimi.dto.IncomeDTO;
 import in.oltimiftari.kursimi.service.IncomeService;
 import lombok.RequiredArgsConstructor;

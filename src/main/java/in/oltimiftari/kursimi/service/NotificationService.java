@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -31,11 +30,11 @@ public class NotificationService {
         log.info("Job started: sendDailyIncomeExpenseReminder()");
         List<ProfileEntity> profiles = profileRepository.findAll();
         for(ProfileEntity profile : profiles) {
-            String body = "Hi " + profile.getFullName() + ",<br><br>"
-                    + "This is a friendly reminder to add your income and expenses for today in Kursimi.<br><br>"
+            String body = "Përshëndetje" + profile.getFullName() + ",<br><br>"
+                    + "Kjo është një kujtesë miqësore për të shtuar të ardhurat dhe shpenzimet e sotme në Kursimi.<br><br>"
                     + "<a href="+frontendUrl+" style='display:inline-block;padding:10px 20px;background-color:#4CAF50;color:#fff;text-decoration:none;border-radius::5px;font-weight:bold;'>Go to Kursimi</a>"
-                    + "<br><br>Best regards,<br>Kursimi Team";
-            emailService.sendEmail(profile.getEmail(), "Daily reminder: Add your income and expenses", body);
+                    + "<br><br>Me respekt,<br>Ekipi i Kursimi";
+            emailService.sendEmail(profile.getEmail(), "Kujtesë ditore: Shto të ardhurat dhe shpenzimet", body);
         }
         log.info("Job completed: sendDailyIncomeExpenseReminder()");
     }
@@ -60,8 +59,8 @@ public class NotificationService {
                     table.append("</tr>");
                 }
                 table.append("</table>");
-                String body = "Hi "+profile.getFullName()+",<br/><br/> Here is a summary of your expenses for today:<br/><br/>"+table+"<br/><br/>Best regards,<br/>Kursimi Team";
-                emailService.sendEmail(profile.getEmail(), "Your daily Expense summary", body);
+                String body = "Përshëndetje "+profile.getFullName()+",<br/><br/> Këtu është një përmbledhje e shpenzimeve tuaja për sot:<br/><br/>"+table+"<br/><br/>Me respekt,<br/>Ekipi i Kursimi";
+                emailService.sendEmail(profile.getEmail(), "Përmbledhja ditore e shpenzimeve tuaja", body);
             }
         }
         log.info("Job completed: sendDailyExpenseSummary()");

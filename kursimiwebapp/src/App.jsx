@@ -1,4 +1,5 @@
 import {BrowserRouter, Navigate,Route, Routes} from "react-router-dom";
+import { AppContextProvider } from './context/AppContext';
 import Income from "./pages/Income.jsx";
 import Expense from "./pages/Expense.jsx";
 import Category from "./pages/Category.jsx";
@@ -10,6 +11,7 @@ import Home from "./pages/Home.jsx";
 import Goal from "./pages/Goal.jsx";
 import Debt from "./pages/Debt.jsx";
 import Investments from "./pages/Investments.jsx";
+import Subscription from "./pages/Subscription.jsx";
 
 const App = () => {
     return(
@@ -26,6 +28,7 @@ const App = () => {
                     <Route path="/goals" element={<Goal />} />
                     <Route path="/debts" element={<Debt />} />
                     <Route path="/investments" element={<Investments />} />
+                    <Route path="/subscriptions" element={<Subscription />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                 </Routes>

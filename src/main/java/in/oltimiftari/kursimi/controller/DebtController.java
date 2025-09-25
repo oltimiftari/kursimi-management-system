@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import jakarta.mail.MessagingException; // SHTO KËTË IMPORT
+import jakarta.mail.MessagingException;
 
 import java.util.List;
 
@@ -53,21 +53,19 @@ public class DebtController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", "debts_report.xlsx"); // Ndryshohet emri i skedarit
+        headers.setContentDispositionFormData("attachment", "debts_report.xlsx");
         headers.setContentLength(excelData.length);
-
         return new ResponseEntity<>(excelData, headers, HttpStatus.OK);
     }
 
 
-    // Endpoint i ri per dergim me email
+
     @PostMapping("/email")
     public ResponseEntity<Void> emailDebtsReport() {
         try {
             debtService.emailDebtsReport();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (MessagingException e) {
-            // E rregulluar per te kapur gabimin e mundshem
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

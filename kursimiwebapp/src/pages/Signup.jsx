@@ -62,7 +62,7 @@ const Signup = () => {
                profileImageUrl
             })
             if (response.status === 201) {
-                toast.success("Profile created successfully.")
+                toast.success("Profili u krijua me sukses.")
                 navigate("/login");
             }
         } catch (err){
